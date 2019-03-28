@@ -18,8 +18,8 @@ service: endpoint-station # NOTE: update this with your service name
 # frameworkVersion: "=X.X.X"
 
 plugins:
-        - serverless-domain-manager
-
+  - serverless-domain-manager
+  - serverless-python-requirements
 provider:
   name: aws
   runtime: python3.7
@@ -124,3 +124,5 @@ functions:
 custom:
         customDomain:
                 domainName: 'endpointstation.marioleone.me'
+        pythonRequirements:
+                pythonBin: '/usr/bin/python3'

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import requests
 
 def login(event, context):
     body = {
@@ -19,7 +20,20 @@ def authenticate(event, context):
     body = {}
 
     if authCode is not None:
-        body["authCode"] = authCode
+        tokenUrl = "https://auth.marioleone.me/oauth2/token"
+        headers = {
+                "Content-Type": "application/x-www-form-urlencoded"
+        }
+        payload = {
+                "client_id": "7v7m04flk64gjrpqs7rqfm4agg",
+                "redirect_uri": "https://endpointstation.marioleone.me/authenticate",
+                "grant_type": "authorization_code",
+                "code": authCode
+        }
+
+        r = requests.post(tokenUrl, data=payload, headers=headers)
+
+        body["jwt"] = r.json()
 
     response = {
         "statusCode": 200,
