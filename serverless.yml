@@ -58,15 +58,22 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  users:
-    handler: users.handler
+  signIn:
+    handler: users.login
     events:
             - http:
-                    path: users
-                    method: post
-            - http:
-                    path: users
+                    path: login
                     method: get
+  authenticate:
+    handler: users.authenticate
+    events:
+            - http:
+                    path: authenticate
+                    method: get
+                    request:
+                            parameters:
+                                    querystrings:
+                                            code: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

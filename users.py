@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
 import json
-import uuid
 
-def handler(event, context):
+def login(event, context):
     body = {
-        "api-key": str(uuid.uuid4()),
-        "input": event
+            "loginLink": "https://auth.marioleone.me/login?response_type=code&client_id=7v7m04flk64gjrpqs7rqfm4agg&redirect_uri=https://endpointstation.marioleone.me/authenticate"
     }
 
     response = {
@@ -16,11 +14,16 @@ def handler(event, context):
 
     return response
 
-    # Use this code if you don't use the http event with the LAMBDA-PROXY
-    # integration
-    """
-    return {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "event": event
+def authenticate(event, context):
+    authCode = event.get("queryStringParameters", {}).get("code")
+    body = {}
+
+    if authCode is not None:
+        body["authCode"] = authCode
+
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(body)
     }
-    """
+
+    return response
