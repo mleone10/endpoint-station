@@ -1,0 +1,19 @@
+service: endpoint-station-users
+plugins:
+  - serverless-domain-manager
+provider:
+  name: aws
+  runtime: python3.7
+functions:
+  users:
+    handler: users.get
+    events:
+            - http:
+                    path: ''
+                    method: get
+                    authorizer:
+                            arn: arn:aws:cognito-idp:us-east-1:438693460185:userpool/us-east-1_7xysWBfdu
+custom:
+        customDomain:
+                domainName: 'endpointstation.marioleone.me'
+                basePath: 'users'
