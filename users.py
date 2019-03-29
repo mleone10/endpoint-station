@@ -4,18 +4,16 @@ import json
 import requests
 
 def login(event, context):
-    body = {
-            "loginLink": "https://auth.marioleone.me/login?response_type=code&client_id=7v7m04flk64gjrpqs7rqfm4agg&redirect_uri=https://endpointstation.marioleone.me/authenticate"
-    }
-
     response = {
-        "statusCode": 200,
-        "body": json.dumps(body)
+        "statusCode": 302,
+        "headers": {
+            "Location": "https://auth.marioleone.me/login?response_type=code&client_id=7v7m04flk64gjrpqs7rqfm4agg&redirect_uri=https://endpointstation.marioleone.me/auth/verify"
+        }
     }
 
     return response
 
-def authenticate(event, context):
+def verify(event, context):
     authCode = event.get("queryStringParameters", {}).get("code")
     body = {}
 
@@ -26,14 +24,14 @@ def authenticate(event, context):
         }
         payload = {
                 "client_id": "7v7m04flk64gjrpqs7rqfm4agg",
-                "redirect_uri": "https://endpointstation.marioleone.me/authenticate",
+                "redirect_uri": "https://endpointstation.marioleone.me/auth/verify",
                 "grant_type": "authorization_code",
                 "code": authCode
         }
 
         r = requests.post(tokenUrl, data=payload, headers=headers)
 
-        body["jwt"] = r.json()
+        body["id_token"] = r.json().get("id_token")
 
     response = {
         "statusCode": 200,
