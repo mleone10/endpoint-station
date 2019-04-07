@@ -1,4 +1,4 @@
-service: endpoint-station-users
+service: endpoint-station-stations
 plugins:
   - serverless-domain-manager
 provider:
@@ -6,7 +6,7 @@ provider:
   runtime: python3.7
 functions:
   users:
-    handler: users.get
+    handler: stations.get
     events:
             - http:
                     path: ''
@@ -16,4 +16,5 @@ functions:
 custom:
         customDomain:
                 domainName: 'endpointstation.marioleone.me'
-                basePath: 'users'
+                basePath: 'stations'
+
