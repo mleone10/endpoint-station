@@ -1,6 +1,7 @@
 service: endpoint-station-stations
 plugins:
   - serverless-domain-manager
+  - serverless-python-requirements
 provider:
   name: aws
   runtime: python3.7
@@ -17,4 +18,6 @@ custom:
         customDomain:
                 domainName: 'endpointstation.marioleone.me'
                 basePath: 'stations'
+        pythonRequirements:
+                pythonBin: '/usr/bin/python3'
 
