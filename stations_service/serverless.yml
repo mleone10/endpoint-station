@@ -18,6 +18,7 @@ custom:
         customDomain:
                 domainName: 'endpointstation.marioleone.me'
                 basePath: 'stations'
+                certificateArn: 'arn:aws:acm:us-east-1:438693460185:certificate/e0393115-7a0c-4b71-b8df-2e4179303625'
         pythonRequirements:
                 pythonBin: '/usr/bin/python3'
 
